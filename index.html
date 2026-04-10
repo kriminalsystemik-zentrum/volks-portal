@@ -236,15 +236,12 @@
 </script>
 
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    const supabaseUrl = 'https://juzlmrvkvyswmfjxxonu.supabase.co';
+    const supabaseKey = 'sb_publishable_kqBMLyRB54C0_-BZFp0AYw_9zLRjOGp';
 
-    window.db = db;
-    window.collection = collection;
-    window.addDoc = addDoc;
+    window.supabase = createClient ( supabaseUrl, supabaseKey);
 </script>
 
 <script>
@@ -255,13 +252,16 @@ window.addEventListener("load", async function() {
       sessionId = crypto.randomUUID();
       localStorage.setItem("sessionId", sessionId);
     }
-    if (!window.db) {
+    if (!window.supabas) {
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
     const res = await fetch("https://ipapi.co/json/");
     const data = await res.json();
 
-    await window.addDoc(window.collection(window.db, "visitors"), {
+    await window.supabas.from('visitors').insert([
+      {
+        
+      
         ip: data.ip,
         country: data.country_name,
         city: data.city,
@@ -271,11 +271,12 @@ window.addEventListener("load", async function() {
         platform: navigator.platform,
         screen: screen.width + "x" + screen.height,
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        cookiesEnabled: navigator.cookieEnabled,
+        cookies_Enabled: navigator.cookieEnabled,
         hardwareConcurrency: navigator.hardwareConcurrency,
         referrer: document.referrer,
         timestamp: Date.now()
-    });
+          }]
+    );
     console.log("Visitor saved:", data.ip);
   } catch (e) {
     console.log("Visitor tracking error:", e);
