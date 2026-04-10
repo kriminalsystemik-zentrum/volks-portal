@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Criminal Systemics Center</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #6366f1; /* Indigo */
+      --secondary: #0f172a; /* Slate 900 */
+      --accent: #22d3ee; /* Cyan */
+      --bg: #f8fafc;
+      --glass: rgba(255, 255, 255, 0.8);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--secondary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Ensures footer stays at bottom even with few sections */
+    }
+
+    /* --- MODERN NAVIGATION --- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      padding: 15px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h2 { 
+      margin: 0; 
+      font-weight: 800; 
+      letter-spacing: -1px; 
+      font-size: 24px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    nav { display: flex; align-items: center; }
+
+    nav a {
+      color: var(--secondary);
+      margin-left: 25px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover { color: var(--primary); }
+
+    /* --- MODERN SLIDING LANGUAGE TOGGLE --- */
+    .lang-switch {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: #e2e8f0;
+      border-radius: 20px;
+      padding: 4px;
+      cursor: pointer;
+      margin-left: 25px;
+      width: 76px;
+      height: 32px;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    .lang-slider {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 34px;
+      height: 24px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+
+    .lang-switch[data-current="de"] .lang-slider {
+      transform: translateX(34px);
+    }
+
+    .lang-label {
+      position: relative;
+      z-index: 1;
+      font-size: 12px;
+      font-weight: 700;
+      width: 34px;
+      text-align: center;
+      color: #64748b;
+      transition: color 0.3s;
+    }
+
+    .lang-switch[data-current="en"] .lang-label.en,
+    .lang-switch[data-current="de"] .lang-label.de {
+      color: var(--primary);
+    }
+
+    /* --- HERO SECTION --- */
+    .hero {
+      text-align: center;
+      padding: 120px 20px;
+      background: radial-gradient(circle at top right, #eef2ff, #ffffff);
+      flex: 1; /* Allows hero to push footer to the bottom if page is empty */
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      margin-bottom: 20px;
+      letter-spacing: -2px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #64748b;
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+
+    .btn {
+      padding: 16px 32px;
+      margin: 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.4); }
+
+    .btn-secondary {
+      background: white;
+      border: 1px solid #e2e8f0;
+      color: var(--secondary);
+    }
+
+    .btn-secondary:hover { background: #f1f5f9; }
+
+    /* --- FOOTER --- */
+    footer {
+      background: #020617;
+      color: #94a3b8;
+      padding: 80px 5% 40px;
+    }
+
+    footer h3 { color: white; }
+
+    footer a { color: #94a3b8; transition: color 0.3s; }
+    footer a:hover { color: var(--accent); }
+
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h2>Criminal Systemics Center PORTAL</h2>
+  <nav>
+    <a href="login.html" class="lang" data-en="Login" data-de="Anmelden">Login</a>
+    <a href="register.html" class="lang" data-en="Register" data-de="Registrieren">Register</a>
+    
+    <div class="lang-switch" id="lang-switch" data-current="en" onclick="toggleLanguage()">
+      <div class="lang-slider"></div>
+      <span class="lang-label en">EN</span>
+      <span class="lang-label de">DE</span>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1 class="lang" data-en="Criminal Systemics Center Portal" data-de="Kriminalsystemik-Zentrum Portal">Community Safety Portal</h1>
+  <p class="lang" data-en="A next-generation awareness platform for secure, localized incident reporting and threat mitigation." data-de="Eine Awareness-Plattform der nächsten Generation für sichere, lokalisierte Vorfallsmeldungen und Bedrohungsabwehr.">A next-generation awareness platform for secure, localized incident reporting and threat mitigation.</p>
+  <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+    <a href="login.html" class="btn btn-primary lang" data-en="Secure Login" data-de="Sicherer Login">Secure Login</a>
+    <a href="register.html" class="btn btn-secondary lang" data-en="Join Network" data-de="Netzwerk beitreten">Join Network</a>
+  </div>
+</section>
+
+<footer>
+  <div style="max-width: 1200px; margin: auto; text-align: center;">
+    <h3>Criminal Systemics Center Portal</h3>
+    <p class="lang" data-en="Official Community Awareness Platform" data-de="Offizielle Plattform für das Bewusstsein der Gemeinschaft">Official Community Awareness Platform</p>
+    <div style="margin: 30px 0;">
+      <a href="terms.html" class="lang" data-en="Terms & Conditions" data-de="Allgemeine Geschäftsbedingungen">Terms & Conditions</a> | 
+      <a href="privacy.html" class="lang" data-en="Privacy Policy" data-de="Datenschutz-Bestimmungen">Privacy Policy</a>
+    </div>
+    <div style="font-size: 12px; opacity: 0.5; border-top: 1px solid #1e293b; padding-top: 20px;">
+      <p class="lang" data-en="© 2026 Kriminalsystemik Zentrum/Criminal Systemics Center Portal. All Rights Reserved. | Managed for Security & Research Purposes" data-de="© 2026 Kriminalsystemik-zentrum Portal. Alle Rechte vorbehalten. | Verwaltet zu Sicherheits- und Forschungszwecken">© 2026 Criminal Systemics Center. All Rights Reserved. | Managed for Security & Research Purposes</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleLanguage() {
+    const switchEl = document.getElementById('lang-switch');
+    const currentLang = switchEl.getAttribute('data-current');
+    const targetLang = currentLang === 'en' ? 'de' : 'en';
+    
+    // Update switch visual state
+    switchEl.setAttribute('data-current', targetLang);
+    
+    // Update the document language tag
+    document.documentElement.lang = targetLang;
+
+    // Swap text for all elements with the 'lang' class
+    const elements = document.querySelectorAll('.lang');
+    elements.forEach(el => {
+      el.innerHTML = el.getAttribute('data-' + targetLang);
+    });
+  }
+</script>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    window.db = db;
+    window.collection = collection;
+    window.addDoc = addDoc;
+</script>
+
+<script>
+window.addEventListener("load", async function() {
+  try {
+    let sessionId = localStorage.getItem("sessionId");
+    if (!sessionId) {
+      sessionId = crypto.randomUUID();
+      localStorage.setItem("sessionId", sessionId);
+    }
+    if (!window.db) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+
+    await window.addDoc(window.collection(window.db, "visitors"), {
+        ip: data.ip,
+        country: data.country_name,
+        city: data.city,
+        sessionId: sessionId,
+        userAgent: navigator.userAgent,
+        language: navigator.language,
+        platform: navigator.platform,
+        screen: screen.width + "x" + screen.height,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        cookiesEnabled: navigator.cookieEnabled,
+        hardwareConcurrency: navigator.hardwareConcurrency,
+        referrer: document.referrer,
+        timestamp: Date.now()
+    });
+    console.log("Visitor saved:", data.ip);
+  } catch (e) {
+    console.log("Visitor tracking error:", e);
+  }
+});
+</script>
+
+</body>
+</html>

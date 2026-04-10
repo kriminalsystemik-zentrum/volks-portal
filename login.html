@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Welcome - SSK Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      background: #f0f2f5; /* Slightly grey background to make the white box pop */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .box {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-weight: 600;
+      color: #1d1d1f;
+      font-size: 24px;
+    }
+
+    p {
+      color: #5f6368;
+      margin-bottom: 32px;
+      font-size: 15px;
+    }
+
+    /* Standardized Identity Provider Button */
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      border: 1px solid #dadce0;
+      background: #fff;
+      font-size: 15px;
+      font-weight: 500;
+      color: #3c4043;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .btn:hover {
+      background: #f8f9fa;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .btn svg, .btn .icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 12px;
+    }
+
+    /* Custom Email Button Styling */
+    .btn-email {
+      background: #1a73e8;
+      color: #fff;
+      border: none;
+    }
+
+    .btn-email:hover {
+      background: #1557b0;
+      box-shadow: 0 1px 3px rgba(60,64,67,0.3);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 24px 0;
+      color: #777;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .divider:not(:empty)::before {
+      margin-right: 15px;
+    }
+
+    .divider:not(:empty)::after {
+      margin-left: 15px;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 480px) {
+      body { background: #fff; }
+      .box {
+        box-shadow: none;
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>SSK Portal</h2>
+  <p>Choose how you want to sign in</p>
+
+  <button class="btn" onclick="goAuth('google')">
+    <svg viewBox="0 0 48 48">
+      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+      <path fill="none" d="M0 0h48v48H0z"></path>
+    </svg>
+    Continue with Google
+  </button>
+
+  <button class="btn" onclick="goAuth('apple')">
+    <svg viewBox="0 0 384 512" style="fill: #000;">
+      <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path>
+    </svg>
+    Continue with Apple
+  </button>
+
+  <button class="btn" onclick="goAuth('yahoo')">
+    <div class="icon" style="color: #7e1fff; font-weight: 900; font-style: italic; font-size: 22px; line-height: 20px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Y!</div>
+    Continue with Yahoo
+  </button>
+
+  <div class="divider">or</div>
+
+  <button class="btn btn-email" onclick="goAuth('email')">
+    Continue with Email
+  </button>
+</div>
+
+<script>
+  function goAuth(provider){
+    // This perfectly matches the switch logic we built into auth.html
+    window.location.href = "auth.html?type=" + provider;
+  }
+</script>
+
+</body>
+</html>

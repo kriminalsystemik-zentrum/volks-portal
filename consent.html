@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cookie Consent & Data Settings - SSK Portal</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 700px; margin: 50px auto; padding: 20px; background: #f4f4f4; }
+        .consent-card { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); position: relative; }
+        h1 { color: #c8102e; border-bottom: 2px solid #c8102e; padding-bottom: 10px; padding-right: 60px; /* Space for button */ }
+        .option-group { border: 1px solid #eee; padding: 20px; margin: 20px 0; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; }
+        .option-info { max-width: 80%; }
+        .option-info h3 { margin: 0; font-size: 16px; }
+        .option-info p { margin: 5px 0 0; font-size: 13px; color: #666; }
+        .toggle { transform: scale(1.5); cursor: pointer; }
+        .btn-group { display: flex; gap: 10px; margin-top: 30px; }
+        .btn { flex: 1; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        .btn-save { background: #c8102e; color: white; }
+        .btn-all { background: #333; color: white; }
+        
+        /* Language Toggle Style */
+        #lang-toggle { position: absolute; top: 35px; right: 40px; padding: 6px 12px; background-color: white; color: #c8102e; border: 1px solid #c8102e; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 14px; }
+        #lang-toggle:hover { background-color: #f9f9f9; }
+    </style>
+</head>
+<body>
+
+<div class="consent-card">
+    <button id="lang-toggle" data-current="en" onclick="toggleLanguage()">DE</button>
+
+    <h1 class="lang" data-en="Privacy & Cookie Settings" data-de="Datenschutz- & Cookie-Einstellungen">Privacy & Cookie Settings</h1>
+    <p class="lang" data-en="To support the <strong>kriminalsystemik.zentrum@tutamail.com Study</strong>, we use cookies to improve security and analyze immigration trends. You can customize your preferences below." data-de="Zur Unterstützung der <strong>Österreichischen Einwanderungsstudie</strong> verwenden wir Cookies, um die Sicherheit zu verbessern und Einwanderungstrends zu analysieren. Sie können Ihre Einstellungen unten anpassen.">To support the <strong>kriminalsystemik.zentrum@tutamail.com Study</strong>, we use cookies to improve security and analyze immigration trends. You can customize your preferences below.</p>
+
+    <div class="option-group">
+        <div class="option-info">
+            <h3 class="lang" data-en="Strictly Necessary" data-de="Unbedingt erforderlich">Strictly Necessary</h3>
+            <p class="lang" data-en="Required for secure login and account synchronization. Cannot be disabled." data-de="Erforderlich für sicheres Login und Kontosynchronisierung. Kann nicht deaktiviert werden.">Required for secure login and account synchronization. Cannot be disabled.</p>
+        </div>
+        <input type="checkbox" checked disabled class="toggle">
+    </div>
+
+    <div class="option-group">
+        <div class="option-info">
+            <h3 class="lang" data-en="Research & Analytics" data-de="Forschung & Analyse">Research & Analytics</h3>
+            <p class="lang" data-en="Allows us to collect anonymized data on user behavior to improve the immigration awareness platform." data-de="Ermöglicht es uns, anonymisierte Daten über das Nutzerverhalten zu sammeln, um die Plattform für Einwanderungsbewusstsein zu verbessern.">Allows us to collect anonymized data on user behavior to improve the immigration awareness platform.</p>
+        </div>
+        <input type="checkbox" checked class="toggle">
+    </div>
+
+    <div class="option-group">
+        <div class="option-info">
+            <h3 class="lang" data-en="AI Model Training" data-de="KI-Modell-Training">AI Model Training</h3>
+            <p class="lang" data-en="Enables the use of your profile metadata to train our immigration predictive models (Vollmacht required)." data-de="Ermöglicht die Verwendung Ihrer Profil-Metadaten zum Trainieren unserer prädiktiven Einwanderungsmodelle (Vollmacht erforderlich).">Enables the use of your profile metadata to train our immigration predictive models (Vollmacht required).</p>
+        </div>
+        <input type="checkbox" class="toggle">
+    </div>
+
+    <div class="btn-group">
+        <button class="btn btn-all lang" data-en="Accept All" data-de="Alle akzeptieren" onclick="location.href='index.html'">Accept All</button>
+        <button class="btn btn-save lang" data-en="Save Preferences" data-de="Einstellungen speichern" onclick="location.href='index.html'">Save Preferences</button>
+    </div>
+</div>
+
+<script>
+    function setLanguage(lang) {
+        const btn = document.getElementById('lang-toggle');
+        btn.innerText = lang === 'en' ? 'DE' : 'EN';
+        btn.setAttribute('data-current', lang);
+        document.documentElement.lang = lang;
+        const elements = document.querySelectorAll('.lang');
+        elements.forEach(el => { el.innerHTML = el.getAttribute('data-' + lang); });
+        localStorage.setItem('ssk_preferred_lang', lang);
+    }
+    function toggleLanguage() {
+        const btn = document.getElementById('lang-toggle');
+        const currentLang = btn.getAttribute('data-current');
+        const targetLang = currentLang === 'en' ? 'de' : 'en';
+        setLanguage(targetLang);
+    }
+    window.onload = () => {
+        const savedLang = localStorage.getItem('ssk_preferred_lang') || 'en';
+        setLanguage(savedLang);
+    };
+</script>
+
+</body>
+</html>
