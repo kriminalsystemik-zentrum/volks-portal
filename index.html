@@ -252,21 +252,21 @@ window.addEventListener("load", async function() {
       sessionId = crypto.randomUUID();
       localStorage.setItem("sessionId", sessionId);
     }
-    if (!window.supabas) {
+    if (!window.supabase) {
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
     const res = await fetch("https://ipapi.co/json/");
     const data = await res.json();
 
-    await window.supabas.from('visitors').insert([
+    await window.supabase.from('visitors').insert([
       {
         
       
         ip: data.ip,
         country: data.country_name,
         city: data.city,
-        sessionId: sessionId,
-        userAgent: navigator.userAgent,
+        session_id: sessionId,
+        user_Agent: navigator.userAgent,
         language: navigator.language,
         platform: navigator.platform,
         screen: screen.width + "x" + screen.height,
@@ -274,7 +274,7 @@ window.addEventListener("load", async function() {
         cookies_Enabled: navigator.cookieEnabled,
         hardwareConcurrency: navigator.hardwareConcurrency,
         referrer: document.referrer,
-        timestamp: Date.now()
+        visited_at: Date.now()
           }]
     );
     console.log("Visitor saved:", data.ip);
