@@ -266,13 +266,13 @@ window.addEventListener("load", async function() {
         country: data.country_name,
         city: data.city,
         session_id: sessionId,
-        user_Agent: navigator.userAgent,
+        user_agent: navigator.userAgent,
         language: navigator.language,
         platform: navigator.platform,
         screen: screen.width + "x" + screen.height,
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        cookies_Enabled: navigator.cookieEnabled,
-        hardwareConcurrency: navigator.hardwareConcurrency,
+        cookies_enabled: navigator.cookieEnabled,
+        hardware_concurrency: navigator.hardwareConcurrency,
         referrer: document.referrer,
         visited_at: Date.now()
           }]
